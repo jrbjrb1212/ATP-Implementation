@@ -1,0 +1,27 @@
+{
+    "userID": "U123",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "numberOfPassengers": 3,
+    "carpool": true,
+    "dateOfRide": "2023-12-01",
+    "hour": "08",
+    "minute": "30",
+    "period": "AM",
+    "purposeOfRide": "Work commute",
+    "pickupLocation": {
+      "streetAddress": "123 Main St",
+      "streetAddress2": "",
+      "city": "Anytown",
+      "state": "CA",
+      "postalCode": "12345"
+    },
+    "dropOffLocation": {
+      "streetAddress": "456 Elm St",
+      "streetAddress2": "Apt 2B",
+      "city": "Otherville",
+      "state": "CA",
+      "postalCode": "54321"
+    }
+  }
+  

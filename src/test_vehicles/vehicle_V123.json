@@ -1,0 +1,12 @@
+{
+    "vehicleID": "V123",
+    "vehicleHealth": true,
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Camry",
+    "vehicleYear": "2022",
+    "vehicleVIN": "ABC123456DEF7890",
+    "vehicleLicensePlate": "ABC123",
+    "numberOfPassengers": "4",
+    "vehicleCharge": 75.5
+  }
+  

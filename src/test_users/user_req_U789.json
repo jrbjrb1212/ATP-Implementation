@@ -1,0 +1,27 @@
+{
+    "userID": "U789",
+    "firstName": "Eve",
+    "lastName": "Brown",
+    "numberOfPassengers": 2,
+    "carpool": true,
+    "dateOfRide": "2023-12-03",
+    "hour": "11",
+    "minute": "45",
+    "period": "AM",
+    "purposeOfRide": "Grocery shopping",
+    "pickupLocation": {
+      "streetAddress": "222 Maple St",
+      "streetAddress2": "Apt 5C",
+      "city": "Metroville",
+      "state": "TX",
+      "postalCode": "45678"
+    },
+    "dropOffLocation": {
+      "streetAddress": "333 Oak St",
+      "streetAddress2": "",
+      "city": "Villageton",
+      "state": "TX",
+      "postalCode": "87654"
+    }
+  }
+  

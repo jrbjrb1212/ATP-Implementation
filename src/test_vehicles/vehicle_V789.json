@@ -1,0 +1,12 @@
+{
+    "vehicleID": "V789",
+    "vehicleHealth": true,
+    "vehicleMake": "Honda",
+    "vehicleModel": "Civic",
+    "vehicleYear": "2020",
+    "vehicleVIN": "EFG987654QWE1234",
+    "vehicleLicensePlate": "EFG789",
+    "numberOfPassengers": "4",
+    "vehicleCharge": 70.0
+  }
+  

@@ -1,0 +1,27 @@
+{
+    "userID": "U456",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "numberOfPassengers": 1,
+    "carpool": false,
+    "dateOfRide": "2023-12-02",
+    "hour": "09",
+    "minute": "15",
+    "period": "AM",
+    "purposeOfRide": "Doctor's appointment",
+    "pickupLocation": {
+      "streetAddress": "789 Oak St",
+      "streetAddress2": "",
+      "city": "Smalltown",
+      "state": "NY",
+      "postalCode": "98765"
+    },
+    "dropOffLocation": {
+      "streetAddress": "101 Pine St",
+      "streetAddress2": "",
+      "city": "Villageton",
+      "state": "NY",
+      "postalCode": "56789"
+    }
+  }
+  

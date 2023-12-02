@@ -1,0 +1,27 @@
+{
+    "userID": "U567",
+    "firstName": "Grace",
+    "lastName": "Williams",
+    "numberOfPassengers": 2,
+    "carpool": false,
+    "dateOfRide": "2023-12-05",
+    "hour": "07",
+    "minute": "20",
+    "period": "PM",
+    "purposeOfRide": "Dinner with friends",
+    "pickupLocation": {
+      "streetAddress": "777 Maple St",
+      "streetAddress2": "",
+      "city": "Sunnyville",
+      "state": "FL",
+      "postalCode": "34567"
+    },
+    "dropOffLocation": {
+      "streetAddress": "888 Oak St",
+      "streetAddress2": "",
+      "city": "Beachtown",
+      "state": "FL",
+      "postalCode": "76543"
+    }
+  }
+  

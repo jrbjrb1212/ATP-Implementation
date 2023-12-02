@@ -1,0 +1,27 @@
+{
+    "userID": "U234",
+    "firstName": "David",
+    "lastName": "Lee",
+    "numberOfPassengers": 4,
+    "carpool": true,
+    "dateOfRide": "2023-12-04",
+    "hour": "02",
+    "minute": "00",
+    "period": "PM",
+    "purposeOfRide": "Family outing",
+    "pickupLocation": {
+      "streetAddress": "444 Pine St",
+      "streetAddress2": "",
+      "city": "Mountainview",
+      "state": "CA",
+      "postalCode": "23456"
+    },
+    "dropOffLocation": {
+      "streetAddress": "555 Elm St",
+      "streetAddress2": "",
+      "city": "Laketown",
+      "state": "CA",
+      "postalCode": "65432"
+    }
+  }
+  

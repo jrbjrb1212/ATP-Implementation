@@ -1,0 +1,12 @@
+{
+    "vehicleID": "V456",
+    "vehicleHealth": false,
+    "vehicleMake": "Ford",
+    "vehicleModel": "Fusion",
+    "vehicleYear": "2019",
+    "vehicleVIN": "XYZ098765POI4321",
+    "vehicleLicensePlate": "XYZ456",
+    "numberOfPassengers": "5",
+    "vehicleCharge": 62.8
+  }
+  

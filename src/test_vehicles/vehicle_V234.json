@@ -1,0 +1,12 @@
+{
+    "vehicleID": "V234",
+    "vehicleHealth": true,
+    "vehicleMake": "Chevrolet",
+    "vehicleModel": "Malibu",
+    "vehicleYear": "2021",
+    "vehicleVIN": "LMN567890RST4321",
+    "vehicleLicensePlate": "LMN123",
+    "numberOfPassengers": "5",
+    "vehicleCharge": 68.2
+  }
+  

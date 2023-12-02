@@ -1,0 +1,12 @@
+{
+    "vehicleID": "V567",
+    "vehicleHealth": false,
+    "vehicleMake": "BMW",
+    "vehicleModel": "X3",
+    "vehicleYear": "2018",
+    "vehicleVIN": "FGH456789JKL3210",
+    "vehicleLicensePlate": "FGH789",
+    "numberOfPassengers": "5",
+    "vehicleCharge": 80.9
+  }
+  
