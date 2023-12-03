@@ -2,7 +2,7 @@ package src;
 
 import com.google.gson.Gson;
 
-public class UserClass {
+public class UserReqClass {
     private String userID;
     private String firstName;
     private String lastName;
@@ -17,7 +17,7 @@ public class UserClass {
     private Location dropOffLocation;
 
 
-    public UserClass() {
+    public UserReqClass() {
     }
 
     public String getUserID(){
@@ -197,7 +197,7 @@ public class UserClass {
     public void deserializeFromString(String userDataString){
 
         Gson gson = new Gson();
-        UserClass temp = gson.fromJson(userDataString, UserClass.class);
+        UserReqClass temp = gson.fromJson(userDataString, UserReqClass.class);
 
         this.firstName = temp.firstName;
         this.lastName = temp.lastName;
