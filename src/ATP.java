@@ -22,16 +22,32 @@ public class ATP {
         addTransportVehiclesToATP(activeTransportVehicles, activeATPVehicles);
     }
 
-    public String reserveRide(){
+    public String reserveRide(UserReqClass userReq){
+        synchronized (activeATPVehicles) {
+            // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
+        }
+
+
+        // On successful reserveRide
+        // Log the user request:
+        // String fileName = "booked_" + rideID;
+        // String logFilePath = "src/test_atp_vehicles/reserve_rides/" + fileName + ".json"; 
+        // update the log of booked rides
+        // writeToLog(logFilePath, BookedRide.toString());
+
+        // On successful reserveRide
+        // update the stored JSON file in test_atp_vehicles
         return "reserveRide: Not working yet";
     }
 
-    public String changeRide(){
+    public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
+        // attempt to reserve a ride
+        // if reserve a ride is successful then call delete ride on the old ride
         return "changeRide: Not working yet";
     }
 
     public String returnAllAvailableRides(){
-
+        // TODO: searching algorithm for open times slices goes here
 
         // sortAvailableRides(availableVehicles, userReqData);
         // return availableVehicles;
@@ -71,8 +87,32 @@ public class ATP {
         return availableVehicles;
     }
 
-    public String deleteRide(){
-        return "deleteRide: Not working yet";
+    public String deleteRide(BookedRideData toDelete){
+        // Lock activeATPVehicles to prevent concurrent modification
+        synchronized (activeATPVehicles) {
+            // Get the vehicle ID from the ride data
+            String vehicleID = toDelete.getVehicleID();
+            ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
+
+            String start = toDelete.getStartTime();
+            String end = toDelete.getEndTime();
+            String interval = start + "-" + end;
+
+            int sizeBefore = associatedVehicle.getBookedTimes().size();
+            // remove the interval from the list
+            ArrayList<String> currTimes = associatedVehicle.getBookedTimes();
+            currTimes.remove(interval);
+
+            // update the interval list
+            associatedVehicle.setAvailableTimes(currTimes);
+
+            if (sizeBefore != associatedVehicle.getBookedTimes().size()){
+                return "Ride Deletion successful";
+            }
+            else{
+                return "Ride Deletion unsuccessful";
+            }
+        }
     }
 
     // processes all vehicles in the saved vehicle directory
