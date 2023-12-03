@@ -2,6 +2,7 @@ package src;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ATPVehicleData {
     private String vehicleID;
@@ -10,6 +11,12 @@ public class ATPVehicleData {
 
 
     public ATPVehicleData() {
+    }
+
+    public ATPVehicleData(String vehicleID) {
+        this.vehicleID = vehicleID;
+        this.availableTimes = new ArrayList<>(Arrays.asList("0:00-23:59"));
+        this.bookedTimes = new ArrayList<>();
     }
 
     public ATPVehicleData(String vehicleID, ArrayList<String> availableTimes, ArrayList<String> bookedTimes) {

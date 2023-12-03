@@ -15,16 +15,42 @@ public class UserReqClass {
     private String purposeOfRide;
     private Location pickupLocation;
     private Location dropOffLocation;
+    private String vehicleMakePref;
+    private String vehicleModelPref;
+    private String vehicleYearPref;
 
 
     public UserReqClass() {
     }
 
-    public String getUserID(){
+    public UserReqClass(String userID, String firstName, String lastName, 
+                        int numberOfPassengers, boolean carpool, String dateOfRide, 
+                        String hour, String minute, String period, String purposeOfRide, 
+                        Location pickupLocation, Location dropOffLocation, 
+                        String vehicleMakePref, String vehicleModelPref, String vehicleYearPref) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.numberOfPassengers = numberOfPassengers;
+        this.carpool = carpool;
+        this.dateOfRide = dateOfRide;
+        this.hour = hour;
+        this.minute = minute;
+        this.period = period;
+        this.purposeOfRide = purposeOfRide;
+        this.pickupLocation = pickupLocation;
+        this.dropOffLocation = dropOffLocation;
+        this.vehicleMakePref = vehicleMakePref;
+        this.vehicleModelPref = vehicleModelPref;
+        this.vehicleYearPref = vehicleYearPref;
+    }
+
+
+    public String getUserID() {
         return this.userID;
     }
 
-    public void setUserID(String userID){
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -119,6 +145,31 @@ public class UserReqClass {
     public void setDropOffLocation(Location dropOffLocation) {
         this.dropOffLocation = dropOffLocation;
     }
+
+    public String getVehicleMakePref() {
+        return this.vehicleMakePref;
+    }
+
+    public void setVehicleMakePref(String vehicleMakePref) {
+        this.vehicleMakePref = vehicleMakePref;
+    }
+
+    public String getVehicleModelPref() {
+        return this.vehicleModelPref;
+    }
+
+    public void setVehicleModelPref(String vehicleModelPref) {
+        this.vehicleModelPref = vehicleModelPref;
+    }
+
+    public String getVehicleYearPref() {
+        return this.vehicleYearPref;
+    }
+
+    public void setVehicleYearPref(String vehicleYearPref) {
+        this.vehicleYearPref = vehicleYearPref;
+    }
+    
 
     // Inner class for Location
     public static class Location {
