@@ -114,7 +114,7 @@ public class ATP {
 
 
 
-    public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq, String startTime, String endTime){
+    public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq){
         // TODO: searching algorithm for open times slices goes here
 
         ArrayList<ATPVehicleData> availableVehicles = null;
