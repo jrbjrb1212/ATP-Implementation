@@ -1,4 +1,6 @@
 import src.ATP;
+import src.ATPVehicleData;
+import src.BookedRideData;
 import src.UserReqClass;
 
 import org.junit.Before;
@@ -7,19 +9,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-public class ATPtest {
+public class ATPJUnit {
 
     private ATP atp;
 
     @Before
     public void setUp() {
         atp = new ATP();
-        // Any additional setup
     }
 
     @After
     public void tearDown() {
-        // Any cleanup after tests
     }
 
 @Test
@@ -55,24 +55,62 @@ public void testReserveRide_Failure() {
     String result = atp.reserveRide(vehicleID, newUserReq);
 
     // Expecting the ride creation to be unsuccessful
-    assertEquals("Vehicle not found", result);
+    assertEquals("Ride Creation Unsuccessful", result);
 }
 
-    @Test
-    public void testChangeRide() {
+@Test
+public void testChangeRide() {
 
-    }
+    String originalVehicleID = "originalVehicleID";
+    UserReqClass originalReq = new UserReqClass(/* parameters for the original ride */);
 
-    @Test
-    public void testReturnAllAvailableRides() {
+    atp.reserveRide(originalVehicleID, originalReq);
 
-    }
+    BookedRideData rideToChange = new BookedRideData(/* parameters representing the original ride */);
 
-    @Test
-    public void testDeleteRide() {
+    // Set up new conditions for the ride
+    String newVehicleID = "newVehicleID";
+    UserReqClass newReq = new UserReqClass(/* parameters for the new ride */);
 
-    }
+    String result = atp.changeRide(rideToChange, newVehicleID, newReq);
 
-    // Additional test methods for other public methods in the ATP class
-    // Implement test methods for private methods using reflection if necessary
+    assertEquals("Expected success message", result);
 }
+
+
+@Test
+public void testReturnAllAvailableRides() {
+    //user request
+    UserReqClass userReq = new UserReqClass(/* parameters for the user's request */);
+
+    // Get available rides
+    ArrayList<ATPVehicleData> availableRides = atp.returnAllAvailableRides(userReq);
+
+    // Check if the returned list is not null and contains expected rides
+    assertNotNull(availableRides);
+    assertFalse(availableRides.isEmpty());
+
+    // Further assertions can be made based on expected data
+    // For instance, check if a known available ride is included
+}
+
+
+@Test
+public void testDeleteRide() {
+    // First, create and reserve a ride
+    String vehicleID = "testVehicleID";
+    UserReqClass req = new UserReqClass(/* parameters for the ride */);
+    atp.reserveRide(vehicleID, req);
+
+    // Create a BookedRideData instance representing the booked ride
+    BookedRideData rideToDelete = new BookedRideData(/* parameters representing the ride */);
+
+    // Attempt to delete the ride
+    String result = atp.deleteRide(rideToDelete);
+
+    // Check that the deletion was successful
+    assertEquals("Ride Deletion successful", result);
+    }
+}
+
+
