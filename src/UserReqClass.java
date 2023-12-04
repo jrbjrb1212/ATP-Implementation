@@ -11,6 +11,7 @@ public class UserReqClass {
     private String dateOfRide;
     private String hour;
     private String minute;
+    private String lengthOfRideInMinutes;
     private String period;
     private String purposeOfRide;
     private Location pickupLocation;
@@ -27,7 +28,7 @@ public class UserReqClass {
                         int numberOfPassengers, boolean carpool, String dateOfRide, 
                         String hour, String minute, String period, String purposeOfRide, 
                         Location pickupLocation, Location dropOffLocation, 
-                        String vehicleMakePref, String vehicleModelPref, String vehicleYearPref) {
+                        String vehicleMakePref, String vehicleModelPref, String vehicleYearPref, String lengthOfRideInMinutes) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +44,7 @@ public class UserReqClass {
         this.vehicleMakePref = vehicleMakePref;
         this.vehicleModelPref = vehicleModelPref;
         this.vehicleYearPref = vehicleYearPref;
+        this.lengthOfRideInMinutes = lengthOfRideInMinutes;
     }
 
 
@@ -169,7 +171,14 @@ public class UserReqClass {
     public void setVehicleYearPref(String vehicleYearPref) {
         this.vehicleYearPref = vehicleYearPref;
     }
+
+    public void setLengthOfRideInMinutes(String lengthOfRideInMinutes) {
+        this.lengthOfRideInMinutes = lengthOfRideInMinutes;
+    }
     
+    public String getLengthOfRideInMinutes() {
+        return this.lengthOfRideInMinutes;
+    }
 
     // Inner class for Location
     public static class Location {

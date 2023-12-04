@@ -29,17 +29,70 @@ public class ATP {
         addTransportVehiclesToATP(activeTransportVehicles, activeATPVehicles);
     }
 
+<<<<<<< Updated upstream
     public String reserveRide(UserReqClass userReq){
+=======
+    public String reserveRide(String vehicleID, UserReqClass newUserReq){
+>>>>>>> Stashed changes
         synchronized (activeATPVehicles) {
             // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
         
 
+<<<<<<< Updated upstream
             // TODO: On successful reserveRide
             // update the stored JSON file in test_atp_vehicles
             // String fileName = "atp_vehicle_" + vehicleID + ".json";
             // String logFilePath = "src/test_atp_vehicles/" + fileName
             // // update the file saves of test_atp_vehicles to reflect the active data
             // writeToLog(logFilePath, updatedVehicle.toString());
+=======
+            // finds the start and end time of the ride and puts it into a string interval
+            int lengthOfRideInInt = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
+            String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRideInInt/60));
+            String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRideInInt%60));
+            String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
+            
+
+            int sizeBefore = associatedVehicle.getBookedTimes().size();
+            // add the interval to the list of booked times
+            ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
+            currBookedTimes.add(interval);
+            // update the interval list
+            associatedVehicle.setBookedTimes(currBookedTimes); 
+
+
+            //remove the interval from the list of available times
+            ArrayList<String> currAvailableTimes = associatedVehicle.getAvailableTimes();
+            currAvailableTimes.remove(interval);
+            // update the interval list
+            associatedVehicle.setAvailableTimes(currAvailableTimes);
+            
+
+            if (sizeBefore != associatedVehicle.getBookedTimes().size()){
+                // ride creation successful
+                
+                String fileName = "atp_vehicle_" + vehicleID + ".json";
+                String logFilePath = "src/test_atp_vehicles/" + fileName;
+                // update the file saves of test_atp_vehicles to reflect the active data
+                writeToLog(logFilePath, associatedVehicle.toString());
+                
+
+                String rideID = "ride_" + vehicleID + "_" + "111";
+                // need to change final number into a unique identifier for the ride
+
+                // Log the user request:
+                String bookedFileName = "booked_" + rideID + ".json";
+                String bookedLogFilePath = "src/test_booked_vehicles/reserve_rides/" + bookedFileName; 
+                // update the log of booked rides
+                writeToLog(bookedLogFilePath, associatedVehicle.toString());
+
+                return "Ride Creation Successful";
+            }
+            else{
+                return "Ride Creation Unsuccessful";
+            }
+            
+>>>>>>> Stashed changes
         }
 
         // TODO: On successful reserveRide
@@ -51,19 +104,63 @@ public class ATP {
         return "reserveRide: Not working yet";
     }
 
+<<<<<<< Updated upstream
     public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
         // attempt to reserve a ride
         // if reserve a ride is successful then call delete ride on the old ride
+=======
+    public String changeRide(BookedRideData rideToChange, String vehicleID, UserReqClass newUserReq){
+        
+        
+        String s = reserveRide(vehicleID, newUserReq);
+
+        if(s.equals("Ride Creation Successful")){
+            deleteRide(rideToChange);
+        }
+        
+>>>>>>> Stashed changes
         return "changeRide: Not working yet";
     }
 
 
+<<<<<<< Updated upstream
     public String returnAllAvailableRides(UserReqClass newUserReq){
         // TODO: searching algorithm for open times slices goes here
 
         // sortAvailableRides(availableVehicles, userReqData);
         // return availableVehicles;
         return "returnAllAvailableRides: Not working yet";
+=======
+    // why is this return type string?
+    public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq){
+        // TODO: searching algorithm for open times slices goes here
+
+        ArrayList<ATPVehicleData> availableVehicles = null;
+        ATPVehicleData examinedVehicle;
+
+        // finds the start and end time of the ride and puts it into a string interval
+        int lengthOfRideInInt = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
+        String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRideInInt/60));
+        String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRideInInt%60));
+        String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
+
+        for(HashMap.Entry<String,ATPVehicleData> entry : activeATPVehicles.entrySet()){
+            examinedVehicle = entry.getValue();
+
+            
+            ArrayList<String> currTimes = examinedVehicle.getAvailableTimes();
+
+            if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
+                availableVehicles.add(examinedVehicle); // also unsure why this is a bug
+        }
+
+
+        sortAvailableRides(availableVehicles, newUserReq);
+        return availableVehicles;
+
+
+        //return "returnAllAvailableRides: Not working yet";
+>>>>>>> Stashed changes
     }
 
 
