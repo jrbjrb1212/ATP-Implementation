@@ -11,12 +11,10 @@ public class ATPTest {
     @Before
     public void setUp() {
         atp = new ATP();
-        // Initialize mocks and other necessary objects
     }
 
     @After
     public void tearDown() {
-        // Clean up resources
     }
 
     @Test
@@ -59,8 +57,4 @@ public class ATPTest {
         String result = atp.deleteRide(toDelete);
         assertEquals("Expected success or failure message", result);
     }
-
-    // Additional test methods for any other public methods in the ATP class
-
-    // Optional: Test cases for private methods if necessary, using reflection
 }
