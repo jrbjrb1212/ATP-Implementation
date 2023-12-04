@@ -29,41 +29,94 @@ public class ATP {
         addTransportVehiclesToATP(activeTransportVehicles, activeATPVehicles);
     }
 
-    public String reserveRide(UserReqClass userReq){
+    public String reserveRide(String vehicleID, String startTime, String endTime){
         synchronized (activeATPVehicles) {
             // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
         
+            ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
 
-            // TODO: On successful reserveRide
-            // update the stored JSON file in test_atp_vehicles
-            // String fileName = "atp_vehicle_" + vehicleID + ".json";
-            // String logFilePath = "src/test_atp_vehicles/" + fileName
-            // // update the file saves of test_atp_vehicles to reflect the active data
-            // writeToLog(logFilePath, updatedVehicle.toString());
+            String interval = startTime + "-" + endTime;
+            int sizeBefore = associatedVehicle.getBookedTimes().size();
+            // add the interval to the list of booked times
+            ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
+            currBookedTimes.add(interval);
+            // update the interval list
+            associatedVehicle.setBookedTimes(currBookedTimes); 
+
+
+            //remove the interval from the list of available times
+            ArrayList<String> currAvailableTimes = associatedVehicle.getAvailableTimes();
+            currAvailableTimes.remove(interval);
+            // update the interval list
+            associatedVehicle.setAvailableTimes(currAvailableTimes);
+            
+
+            if (sizeBefore != associatedVehicle.getBookedTimes().size()){
+                // ride creation successful
+                
+                String fileName = "atp_vehicle_" + vehicleID + ".json";
+                String logFilePath = "src/test_atp_vehicles/" + fileName;
+                // update the file saves of test_atp_vehicles to reflect the active data
+                writeToLog(logFilePath, associatedVehicle.toString());
+                
+
+                String rideID = "ride_" + vehicleID + "_" + "111";
+                // need to change final number into a unique identifier for the ride
+
+                // Log the user request:
+                String bookedFileName = "booked_" + rideID + ".json";
+                String bookedLogFilePath = "src/test_booked_vehicles/reserve_rides/" + bookedFileName; 
+                // update the log of booked rides
+                writeToLog(bookedLogFilePath, associatedVehicle.toString());
+
+                return "Ride Creation Successful";
+            }
+            else{
+                return "Ride Creation Unsuccessful";
+            }
+            
         }
 
-        // TODO: On successful reserveRide
-        // Log the user request:
-        // String fileName = "booked_" + rideID + ".json";
-        // String logFilePath = "src/test_booked_vehicles/reserve_rides/" + fileName; 
-        // // update the log of booked rides
-        // writeToLog(logFilePath, BookedRide.toString());
-        return "reserveRide: Not working yet";
+        //below is unreachable
+        //return "reserveRide: Not working yet";
     }
 
-    public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
-        // attempt to reserve a ride
-        // if reserve a ride is successful then call delete ride on the old ride
+    public String changeRide(BookedRideData rideToChange, String vehicleID, String startTime, String endTime){
+        
+        
+        String s = reserveRide(vehicleID, startTime, endTime);
+
+        if(s.equals("Ride Creation Successful")){
+            deleteRide(rideToChange);
+        }
+        
         return "changeRide: Not working yet";
     }
 
 
-    public String returnAllAvailableRides(UserReqClass newUserReq){
+    // why is this return type string?
+    public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq, String startTime, String endTime){
         // TODO: searching algorithm for open times slices goes here
 
-        // sortAvailableRides(availableVehicles, userReqData);
-        // return availableVehicles;
-        return "returnAllAvailableRides: Not working yet";
+        ArrayList<ATPVehicleData> availableVehicles = null;
+        ATPVehicleData examinedVehicle;
+
+        for(HashMap.Entry<String,ATPVehicleData> entry : activeATPVehicles.entrySet()){
+            examinedVehicle = entry.getValue();
+
+            String interval = startTime + "-" + endTime;
+            ArrayList<String> currTimes = examinedVehicle.getAvailableTimes();
+
+            if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
+                availableVehicles.add(examinedVehicle); // also unsure why this is a bug
+        }
+
+
+        sortAvailableRides(availableVehicles, newUserReq);
+        return availableVehicles;
+
+
+        //return "returnAllAvailableRides: Not working yet";
     }
 
 
@@ -130,7 +183,7 @@ public class ATP {
             currTimes.remove(interval);
 
             // update the interval list
-            associatedVehicle.setAvailableTimes(currTimes);
+            associatedVehicle.setAvailableTimes(currTimes); // should you remove from bookedTime?
 
             if (sizeBefore != associatedVehicle.getBookedTimes().size()){
                 return "Ride Deletion successful";
