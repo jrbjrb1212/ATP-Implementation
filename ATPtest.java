@@ -35,7 +35,7 @@ public void testReserveRide_Success() {
                                             "Toyota", "Camry", "2020", "60");
 
     // Call the reserveRide method with the vehicle ID and UserReqClass instance
-    final String result = atp.reserveRide(vehicleID, userReq);
+    String result = atp.reserveRide(vehicleID, userReq);
     assertEquals("Ride Creation Successful", result);
 }
 

@@ -38,7 +38,7 @@ public class ATP {
         
             ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
             if (associatedVehicle == null) {
-                return "Vehicle not found";
+                return "Ride Creation Unsuccessful";
             }
     
             // Rest of your code...
