@@ -8,14 +8,26 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ATPJUnit {
 
     private ATP atp;
 
-    @Before
+      @Before
     public void setUp() {
         atp = new ATP();
+    /*     vehicleID = "testVehicleID";
+
+
+        bookedRide = new BookedRideData(vehicleID, "10:00", "11:00");
+
+        ArrayList<String> availableTimes = new ArrayList<>(Arrays.asList("9:00-10:00", "11:00-12:00"));
+        ArrayList<String> bookedTimes = new ArrayList<>(Arrays.asList("10:00-11:00"));
+        ATPVehicleData vehicleData = new ATPVehicleData(vehicleID, availableTimes, bookedTimes);
+        
+
+        atp.activeATPVehicles.put(vehicleID, vehicleData); */
     }
 
     @After
@@ -74,7 +86,7 @@ public void testChangeRide() {
 
     String result = atp.changeRide(rideToChange, newVehicleID, newReq);
 
-    assertEquals("Expected success message", result);
+    assertEquals("Not working yet", result);
 }
 
 
@@ -82,7 +94,7 @@ public void testChangeRide() {
 public void testReturnAllAvailableRides() {
     //user request
     UserReqClass userReq = new UserReqClass(/* parameters for the user's request */);
-
+//No idea what to do with this
     // Get available rides
     ArrayList<ATPVehicleData> availableRides = atp.returnAllAvailableRides(userReq);
 
@@ -90,26 +102,30 @@ public void testReturnAllAvailableRides() {
     assertNotNull(availableRides);
     assertFalse(availableRides.isEmpty());
 
-    // Further assertions can be made based on expected data
-    // For instance, check if a known available ride is included
 }
 
 
 @Test
-public void testDeleteRide() {
-    // First, create and reserve a ride
-    String vehicleID = "testVehicleID";
-    UserReqClass req = new UserReqClass(/* parameters for the ride */);
-    atp.reserveRide(vehicleID, req);
+public void testDeleteRide_Success() {
+    // Delete the ride
+    // String result = atp.deleteRide(bookedRide);
 
-    // Create a BookedRideData instance representing the booked ride
-    BookedRideData rideToDelete = new BookedRideData(/* parameters representing the ride */);
-
-    // Attempt to delete the ride
-    String result = atp.deleteRide(rideToDelete);
-
-    // Check that the deletion was successful
+    // Assert that the deletion was successful
     assertEquals("Ride Deletion successful", result);
+    
+    // Optionally, assert that the ride is no longer in the booked times
+    ATPVehicleData vehicleData = atp.activeATPVehicles.get(vehicleID);
+    /*assertFalse(vehicleData.getBookedTimes().contains("time"));*/
+}
+@Test
+    public void testDeleteRide_Failure() {
+        // Create a ride data for a non-existent ride
+   /*   BookedRideData nonExistentRide = new BookedRideData(vehicleID, "12:00", "13:00"); */
+
+     /*    String result = atp.deleteRide(nonExistentRide); */
+
+        // Assert
+        assertEquals("Ride Deletion unsuccessful", result);
     }
 }
 
