@@ -88,7 +88,38 @@ public void testChangeRide() {
 
     assertEquals("Not working yet", result);
 }
+/*   private HashMap<String, VehicleData> activeTransportVehicles;
+    private ArrayList<ATPVehicleData> availableVehicles;
+    private UserReqClass userReq;
 
+    @Before
+    public void setUp() {
+        // Initialize the activeTransportVehicles with some dummy data
+        activeTransportVehicles = new HashMap<>();
+        activeTransportVehicles.put("V1", new VehicleData("Make1", "Model1", "2020"));
+        activeTransportVehicles.put("V2", new VehicleData("Make2", "Model2", "2021"));
+        activeTransportVehicles.put("V3", new VehicleData("Make1", "Model1", "2022"));
+
+        // Initialize availableVehicles
+        availableVehicles = new ArrayList<>();
+        availableVehicles.add(new ATPVehicleData("V1"));
+        availableVehicles.add(new ATPVehicleData("V2"));
+        availableVehicles.add(new ATPVehicleData("V3"));
+
+        // Set user preferences
+        userReq = new UserReqClass("Make1", "Model1", "2020");
+    } */
+/*@Test
+public void testSortAvailableRides() {
+    SortAvailableRides sortAvailableRides = new SortAvailableRides(activeTransportVehicles);
+    ArrayList<ATPVehicleData> sortedVehicles = sortAvailableRides.sortAvailableRides(availableVehicles, userReq);
+
+    assertNotNull(sortedVehicles);
+    assertEquals(3, sortedVehicles.size());
+    assertEquals("V1", sortedVehicles.get(0).getVehicleID()); // V1 should be ranked highest based on user preferences
+    assertEquals("V3", sortedVehicles.get(1).getVehicleID()); // V3 should be next
+    assertEquals("V2", sortedVehicles.get(2).getVehicleID()); // V2 should be last
+}*/
 
 @Test
 public void testReturnAllAvailableRides() {
