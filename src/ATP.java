@@ -29,15 +29,21 @@ public class ATP {
         addTransportVehiclesToATP(activeTransportVehicles, activeATPVehicles);
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public String reserveRide(UserReqClass userReq){
 =======
     public String reserveRide(String vehicleID, UserReqClass newUserReq){
 >>>>>>> Stashed changes
+=======
+    public String reserveRide(String vehicleID, String startTime, String endTime){
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
         synchronized (activeATPVehicles) {
             // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
         
+            ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             // TODO: On successful reserveRide
             // update the stored JSON file in test_atp_vehicles
@@ -53,6 +59,9 @@ public class ATP {
             String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
             
 
+=======
+            String interval = startTime + "-" + endTime;
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
             int sizeBefore = associatedVehicle.getBookedTimes().size();
             // add the interval to the list of booked times
             ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
@@ -92,18 +101,17 @@ public class ATP {
                 return "Ride Creation Unsuccessful";
             }
             
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
         }
 
-        // TODO: On successful reserveRide
-        // Log the user request:
-        // String fileName = "booked_" + rideID + ".json";
-        // String logFilePath = "src/test_booked_vehicles/reserve_rides/" + fileName; 
-        // // update the log of booked rides
-        // writeToLog(logFilePath, BookedRide.toString());
-        return "reserveRide: Not working yet";
+        //below is unreachable
+        //return "reserveRide: Not working yet";
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
         // attempt to reserve a ride
@@ -113,16 +121,26 @@ public class ATP {
         
         
         String s = reserveRide(vehicleID, newUserReq);
+=======
+    public String changeRide(BookedRideData rideToChange, String vehicleID, String startTime, String endTime){
+        
+        
+        String s = reserveRide(vehicleID, startTime, endTime);
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
 
         if(s.equals("Ride Creation Successful")){
             deleteRide(rideToChange);
         }
         
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
         return "changeRide: Not working yet";
     }
 
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public String returnAllAvailableRides(UserReqClass newUserReq){
         // TODO: searching algorithm for open times slices goes here
@@ -148,6 +166,19 @@ public class ATP {
             examinedVehicle = entry.getValue();
 
             
+=======
+    // why is this return type string?
+    public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq, String startTime, String endTime){
+        // TODO: searching algorithm for open times slices goes here
+
+        ArrayList<ATPVehicleData> availableVehicles = null;
+        ATPVehicleData examinedVehicle;
+
+        for(HashMap.Entry<String,ATPVehicleData> entry : activeATPVehicles.entrySet()){
+            examinedVehicle = entry.getValue();
+
+            String interval = startTime + "-" + endTime;
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
             ArrayList<String> currTimes = examinedVehicle.getAvailableTimes();
 
             if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
@@ -160,7 +191,10 @@ public class ATP {
 
 
         //return "returnAllAvailableRides: Not working yet";
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 83f34cb4c705e327d4460e54093003ab0be8cc81
     }
 
 
@@ -227,7 +261,7 @@ public class ATP {
             currTimes.remove(interval);
 
             // update the interval list
-            associatedVehicle.setAvailableTimes(currTimes);
+            associatedVehicle.setAvailableTimes(currTimes); // should you remove from bookedTime?
 
             if (sizeBefore != associatedVehicle.getBookedTimes().size()){
                 return "Ride Deletion successful";
