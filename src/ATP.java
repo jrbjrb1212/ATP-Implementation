@@ -37,7 +37,20 @@ public class ATP {
             // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
         
             ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
-
+            if (associatedVehicle == null) {
+                return "Vehicle not found";
+            }
+    
+            // Rest of your code...
+    
+            // Example of null-check before use
+        
+            // add the interval to the list of booked times
+            ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
+            if (currBookedTimes == null) {
+                currBookedTimes = new ArrayList<>();
+                associatedVehicle.setBookedTimes(currBookedTimes);
+            }
             // TODO: On successful reserveRide
             // update the stored JSON file in test_atp_vehicles
             // String fileName = "atp_vehicle_" + vehicleID + ".json";
@@ -52,8 +65,7 @@ public class ATP {
             String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
 
             int sizeBefore = associatedVehicle.getBookedTimes().size();
-            // add the interval to the list of booked times
-            ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
+       
             currBookedTimes.add(interval);
             // update the interval list
             associatedVehicle.setBookedTimes(currBookedTimes); 
