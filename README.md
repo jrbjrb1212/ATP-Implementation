@@ -18,13 +18,13 @@ We have provided a sample bash script that included directions to compiling our 
 ## Publicly Accessible ATP Methods
 
 **Method: `reserveRide`**<br> 
-**Return Type: `TBD`**<br>
-**Arguments: `TBD`**<br>
+**Return Type: `String`**<br>
+**Arguments: `UserReqClass`**<br>
 This method will take in a object of type [UserReqClass](src/UserReqClass.java) as an argument. This method will attempt to book the reservation under the specific ATP vehicle using the locking mechanism. If successful, a message of success will be returned. If the unsuccessful, the returnAllAvailableRides method will be invoked to return alternative bookable ride options. After the reservation, no other reservation request will be able to reserve the vehicle at that specific time. The reserve ride request is logged within a [log directory](./src/test_booked_rides/reserved_rides/) for future look up purposes.
 
 
 **Method: `changeRide`**<br> 
-**Return Type: `TBD`**<br>
+**Return Type: `String`**<br>
 **Arguments: `BookedRideData, UserReqClass`**<br>
 This method will take in a object of types [BookedRideData](src/BookedRideData.java) and [UserReqClass](src/UserReqClass.java) as arguments. This method will process a users request to change a previously reserve time. It will attempt to book the new reservation using the reserveRide method and only if successful delete the previously booked ride. Because both reserveRide and deleteRide methods are performed with the locking mechanism this method also enables data concurrency. The change ride request is logged within a [log directory](./src/test_booked_rides/changed_rides/) for future look up purposes.
 
