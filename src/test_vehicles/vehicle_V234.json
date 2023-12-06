@@ -1,8 +1,8 @@
 {
     "vehicleID": "V234",
     "vehicleHealth": true,
-    "vehicleMake": "Chevrolet",
-    "vehicleModel": "Malibu",
+    "vehicleMake": "Toyota",
+    "vehicleModel": "Camry",
     "vehicleYear": "2021",
     "vehicleVIN": "LMN567890RST4321",
     "vehicleLicensePlate": "LMN123",

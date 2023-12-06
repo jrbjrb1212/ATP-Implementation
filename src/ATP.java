@@ -162,32 +162,52 @@ public class ATP {
     public ArrayList<ATPVehicleData> returnAllAvailableRides(UserReqClass newUserReq){
         // TODO: searching algorithm for open times slices goes here
 
-        ArrayList<ATPVehicleData> availableVehicles = null;
+        ArrayList<ATPVehicleData> availableVehicles = new ArrayList<>();
         ATPVehicleData examinedVehicle;
+
+        String dateOfRide = newUserReq.getDateOfRide().replace("-", "/");
 
         // finds the start and end time of the ride and puts it into a string interval
         int lengthOfRideInInt = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
+        String startTime = newUserReq.getHour() + ":" + newUserReq.getMinute();
         String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRideInInt/60));
         String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRideInInt%60));
-        String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
+        String endTime = endHour + ":" + endMinute;
+
+        System.out.println("Interval Request " + startTime + ":" + endTime);
 
 
-        for(HashMap.Entry<String,ATPVehicleData> entry : activeATPVehicles.entrySet()){
-            examinedVehicle = entry.getValue();
+        for(String vehicleID : activeATPVehicles.keySet()){
+            examinedVehicle = activeATPVehicles.get(vehicleID);
+            
 
-            HashMap<String, ArrayList<FreeRideSlot>> currTimes = examinedVehicle.getAvailableTimes();
+            HashMap<String, ArrayList<FreeRideSlot>> allFreeSlots = examinedVehicle.getAvailableTimes();
+            ArrayList<FreeRideSlot> dayOfFreeRideSlots = allFreeSlots.get(dateOfRide);
+            if (dayOfFreeRideSlots == null || dayOfFreeRideSlots.size() == 0)
+                continue;
+                
+            System.out.println("Available times for vehicle ID: " + vehicleID + " is " + dayOfFreeRideSlots.size());
 
-            // if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
-            //     availableVehicles.add(examinedVehicle); // also unsure why this is a bug
+
+            for (FreeRideSlot availableTime : dayOfFreeRideSlots){
+                if (startTime.compareTo(availableTime.getStartTime()) != -1 && 
+                    endTime.compareTo(availableTime.getEndTime()) != 1){
+                        availableVehicles.add(examinedVehicle);
+                        break;
+                }
+            }
         }
+        
+        System.out.println(" ");
+        for (int i=0; i<availableVehicles.size(); i++)
+            System.out.println("VehicleID: " + availableVehicles.get(i).getVehicleID() + " is free.");
+        
+        availableVehicles = sortAvailableRides(availableVehicles, newUserReq);
 
-
-        sortAvailableRides(availableVehicles, newUserReq);
+        System.out.println("Ranked ordering: ");
+        for (int i=0; i<availableVehicles.size(); i++)
+            System.out.println("VehicleID: " + availableVehicles.get(i).getVehicleID());
         return availableVehicles;
-
-
-        //return "returnAllAvailableRides: Not working yet";
-
     }
 
 
@@ -201,28 +221,38 @@ public class ATP {
         String userPrefMake = userReq.getVehicleMakePref();
         String userPrefModel = userReq.getVehicleModelPref();
         String userPrefYear = userReq.getVehicleYearPref();
+        System.out.println("User Pref:");
+        System.out.println(userPrefMake);
+        System.out.println(userPrefModel);
+        System.out.println(userPrefYear);
         
-        ArrayList<Pair<Integer, ATPVehicleData>> rankedAvailableVehicles = new ArrayList<>(availableVehicles.size());
+        ArrayList<Pair<Integer, ATPVehicleData>> rankedAvailableVehicles = new ArrayList<>();
 
         // Compute a ranking for each available vehicle 
         for (int i=0; i<availableVehicles.size(); i++){
             ATPVehicleData availableVehicle = availableVehicles.get(i);
             VehicleData vehicleSpecs = this.activeTransportVehicles.get(availableVehicle.getVehicleID());
             Integer currRank = 0;
+            System.out.println("Vehicle: " + vehicleSpecs.getVehicleID());
+            System.out.println(vehicleSpecs.getVehicleMake());
+            System.out.println(vehicleSpecs.getVehicleModel());
+            System.out.println(vehicleSpecs.getVehicleYear());
 
-            if (vehicleSpecs.getVehicleMake() == userPrefMake)
+            if (vehicleSpecs.getVehicleMake().compareTo(userPrefMake) == 0)
                 currRank++;
-            if (vehicleSpecs.getVehicleModel() == userPrefModel)
+            if (vehicleSpecs.getVehicleModel().compareTo(userPrefModel) == 0)
                 currRank++;
-            if (vehicleSpecs.getVehicleYear() == userPrefYear)
+            if (vehicleSpecs.getVehicleYear().compareTo(userPrefYear) == 0)
                 currRank++;
             
-            Pair<Integer, ATPVehicleData> temp = new Pair<Integer,ATPVehicleData>(currRank, availableVehicle);
-            rankedAvailableVehicles.set(i, temp);
+            System.out.println("currRank: " + currRank);
+            Pair<Integer, ATPVehicleData> temp = new Pair<>(currRank, availableVehicle);
+            rankedAvailableVehicles.add(temp);
         }
 
         // Sort the rankedAvailableVehicles list based on the first element of the Pair (the rank)
         Collections.sort(rankedAvailableVehicles, Comparator.comparing(Pair::getFirst));
+        Collections.reverse(rankedAvailableVehicles);
 
         for (int i=0; i<availableVehicles.size(); i++)
             availableVehicles.set(i, rankedAvailableVehicles.get(i).getSecond());
