@@ -1,27 +1,30 @@
 {
-    "userID": "U234",
-    "firstName": "David",
-    "lastName": "Lee",
-    "numberOfPassengers": 4,
-    "carpool": true,
-    "dateOfRide": "2023-12-04",
-    "hour": "02",
-    "minute": "00",
-    "period": "PM",
-    "purposeOfRide": "Family outing",
-    "pickupLocation": {
-      "streetAddress": "444 Pine St",
-      "streetAddress2": "",
-      "city": "Mountainview",
-      "state": "CA",
-      "postalCode": "23456"
-    },
-    "dropOffLocation": {
-      "streetAddress": "555 Elm St",
-      "streetAddress2": "",
-      "city": "Laketown",
-      "state": "CA",
-      "postalCode": "65432"
-    }
-  }
-  
+  "userID": "U234",
+  "firstName": "Bob",
+  "lastName": "Johnson",
+  "numberOfPassengers": 4,
+  "carpool": false,
+  "dateOfRide": "2023-11-15",
+  "hour": "14",
+  "minute": "45",
+  "lengthOfRideInMinutes": "45",
+  "period": "PM",
+  "purposeOfRide": "Meeting",
+  "pickupLocation": {
+    "streetAddress": "789 Elm St",
+    "streetAddress2": "",
+    "city": "Sometown",
+    "state": "NY",
+    "postalCode": "54321"
+  },
+  "dropOffLocation": {
+    "streetAddress": "321 Pine Rd",
+    "streetAddress2": "Suite 200",
+    "city": "Anothertown",
+    "state": "NY",
+    "postalCode": "98765"
+  },
+  "vehicleMakePref": "Honda",
+  "vehicleModelPref": "Accord",
+  "vehicleYearPref": "2019"
+}

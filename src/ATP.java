@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,94 +32,126 @@ public class ATP {
 
 
 
-    public String reserveRide(String vehicleID, UserReqClass newUserReq){
 
+
+    public BookedRideData reserveRide(String vehicleID, UserReqClass newUserReq){
+        BookedRideData rideBook = new BookedRideData();
+
+        // locking mechanism enabled for the ATP hashmap of vehicles
         synchronized (activeATPVehicles) {
-            // all code done in here will have the locking mechanism enabled for the ATP hashmap of vehicles
         
             ATPVehicleData associatedVehicle = activeATPVehicles.get(vehicleID);
-            if (associatedVehicle == null) {
-                return "Ride Creation Unsuccessful";
-            }
+            if (associatedVehicle == null) 
+                return rideBook;
+            
     
-            // Rest of your code...
-    
-            // Example of null-check before use
-        
-            // add the interval to the list of booked times
-            ArrayList<String> currBookedTimes = associatedVehicle.getBookedTimes();
-            if (currBookedTimes == null) {
-                currBookedTimes = new ArrayList<>();
-                associatedVehicle.setBookedTimes(currBookedTimes);
+            
+            // TODO: Add null check to the size of these data structures
+            HashMap<String, ArrayList<FreeRideSlot>> allFreeSlots = associatedVehicle.getAvailableTimes();
+            HashMap<String, ArrayList<BookedRideData>> allBookedSlots = associatedVehicle.getBookedTimes();
+            System.out.println("Days loaded: " + allFreeSlots.size());
+            
+            String dateOfRide = newUserReq.getDateOfRide().replace("-", "/");
+            ArrayList<FreeRideSlot> dayOFreeRideSlots = allFreeSlots.get(dateOfRide);
+            ArrayList<BookedRideData> dayOfBookedRideSlots = allBookedSlots.get(dateOfRide);
+            System.out.println("Size of available rides: " + dayOFreeRideSlots.size() + " on " + dateOfRide);
+            System.out.println("Size of booked rides: " + dayOfBookedRideSlots.size() + " on " + dateOfRide);
+            
+            int lengthOfRide = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
+            String startTime = newUserReq.getHour() + ":" + newUserReq.getMinute();
+            String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRide/60));
+            String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRide%60));
+            String endTime = endHour + ":" + endMinute;
+
+            
+            // book the ride if possible
+            for (int i=0; i<dayOFreeRideSlots.size(); i++){
+                if (startTime.compareTo(dayOFreeRideSlots.get(i).getStartTime()) != -1 && 
+                    endTime.compareTo(dayOFreeRideSlots.get(i).getEndTime()) != 1){
+                        String oldStart = dayOFreeRideSlots.get(i).getStartTime();
+                        String oldEnd = dayOFreeRideSlots.get(i).getEndTime();
+                        dayOFreeRideSlots.remove(i);
+                        dayOFreeRideSlots.add(new FreeRideSlot(oldStart, startTime));
+                        dayOFreeRideSlots.add(new FreeRideSlot(endTime, oldEnd));
+                        rideBook = new BookedRideData(newRideID(), vehicleID, newUserReq.getUserID(), startTime, endTime);
+                        dayOfBookedRideSlots.add(rideBook);
+                        break;
+                }
             }
+            
+            System.out.println("Size of available rides: " + dayOFreeRideSlots.size() + " on " + dateOfRide);
+            System.out.println("Size of booked rides: " + dayOfBookedRideSlots.size() + " on " + dateOfRide);
+
+
             // TODO: On successful reserveRide
             // update the stored JSON file in test_atp_vehicles
-            // String fileName = "atp_vehicle_" + vehicleID + ".json";
-            // String logFilePath = "src/test_atp_vehicles/" + fileName
-            // // update the file saves of test_atp_vehicles to reflect the active data
-            // writeToLog(logFilePath, updatedVehicle.toString());
+            String fileName = "atp_vehicle_" + vehicleID + ".json";
+            String logFilePath = "src/test_atp_vehicles/" + fileName;
+            // update the file saves of test_atp_vehicles to reflect the active data
+            writeToLog(logFilePath, associatedVehicle.toString());
 
             // finds the start and end time of the ride and puts it into a string interval
-            int lengthOfRideInInt = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
-            String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRideInInt/60));
-            String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRideInInt%60));
-            String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
+            // int lengthOfRideInInt = Integer.parseInt(newUserReq.getLengthOfRideInMinutes());
+            // String endHour = Integer.toString(Integer.parseInt(newUserReq.getHour()) + (lengthOfRideInInt/60));
+            // String endMinute = Integer.toString(Integer.parseInt(newUserReq.getMinute()) + (lengthOfRideInInt%60));
+            // String interval = newUserReq.getHour() + ":" + newUserReq.getMinute() + "-" + endHour + ":" + endMinute;
 
-            int sizeBefore = associatedVehicle.getBookedTimes().size();
-       
-            currBookedTimes.add(interval);
-            // update the interval list
-            associatedVehicle.setBookedTimes(currBookedTimes); 
-
-
-            //remove the interval from the list of available times
-            ArrayList<String> currAvailableTimes = associatedVehicle.getAvailableTimes();
-            currAvailableTimes.remove(interval);
-            // update the interval list
-            associatedVehicle.setAvailableTimes(currAvailableTimes);
+            // int sizeBefore = associatedVehicle.getBookedTimes().size();
             
+            // currBookedTimes.add(interval);
+            // // update the interval list
+            // associatedVehicle.setBookedTimes(currBookedTimes); 
 
-            if (sizeBefore != associatedVehicle.getBookedTimes().size()){
-                // ride creation successful
-                
-                String fileName = "atp_vehicle_" + vehicleID + ".json";
-                String logFilePath = "src/test_atp_vehicles/" + fileName;
-                // update the file saves of test_atp_vehicles to reflect the active data
-                writeToLog(logFilePath, associatedVehicle.toString());
-                
 
-                String rideID = "ride_" + vehicleID + "_" + "111";
-                // need to change final number into a unique identifier for the ride
-
-                // Log the user request:
-                String bookedFileName = "booked_" + rideID + ".json";
-                String bookedLogFilePath = "src/test_booked_vehicles/reserve_rides/" + bookedFileName; 
-                // update the log of booked rides
-                writeToLog(bookedLogFilePath, associatedVehicle.toString());
-
-                return "Ride Creation Successful";
-            }
-            else{
-                return "Ride Creation Unsuccessful";
-            }
+            // //remove the interval from the list of available times
+            // ArrayList<String> currAvailableTimes = associatedVehicle.getAvailableTimes();
+            // currAvailableTimes.remove(interval);
+            // // update the interval list
+            // associatedVehicle.setAvailableTimes(currAvailableTimes);
             
+            // if (sizeBefore != associatedVehicle.getBookedTimes().size()){
+            //     // ride creation successful
+                
+            //     String fileName = "atp_vehicle_" + vehicleID + ".json";
+            //     String logFilePath = "src/test_atp_vehicles/" + fileName;
+            //     // update the file saves of test_atp_vehicles to reflect the active data
+            //     writeToLog(logFilePath, associatedVehicle.toString());
+                
+
+            //     String rideID = "ride_" + vehicleID + "_" + "111";
+            //     // need to change final number into a unique identifier for the ride
+
+            //     // Log the user request:
+            //     String bookedFileName = "booked_" + rideID + ".json";
+            //     String bookedLogFilePath = "src/test_booked_vehicles/reserve_rides/" + bookedFileName; 
+            //     // update the log of booked rides
+            //     writeToLog(bookedLogFilePath, associatedVehicle.toString());
+
+            //     return "Ride Creation Successful";
+            // }
+            // else{
+            //     return "Ride Creation Unsuccessful";
+            // }
+
         }
-
-        //below is unreachable
-        //return "reserveRide: Not working yet";
+        return rideBook;
     }
     
-    
-    public String changeRide(BookedRideData rideToChange, String vehicleID, UserReqClass newUserReq){
+    // TODO: Make this unique
+    private String newRideID() {
+        return "1000";
+    }
+
+    public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
         // attempt to reserve a ride
         // if reserve a ride is successful then call delete ride on the old ride
         
-        String s = reserveRide(vehicleID, newUserReq);
+        // String s = reserveRide(rideToChange.getVehicleID(), newUserReq);
 
 
-        if(s.equals("Ride Creation Successful")){
-            deleteRide(rideToChange);
-        }
+        // if(s.equals("Ride Creation Successful")){
+        //     deleteRide(rideToChange);
+        // }
         
 
         return "changeRide: Not working yet";
@@ -142,10 +175,10 @@ public class ATP {
         for(HashMap.Entry<String,ATPVehicleData> entry : activeATPVehicles.entrySet()){
             examinedVehicle = entry.getValue();
 
-            ArrayList<String> currTimes = examinedVehicle.getAvailableTimes();
+            HashMap<String, ArrayList<FreeRideSlot>> currTimes = examinedVehicle.getAvailableTimes();
 
-            if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
-                availableVehicles.add(examinedVehicle); // also unsure why this is a bug
+            // if(currTimes.contains(interval)) // not entirely sure how the time works, does contain work?
+            //     availableVehicles.add(examinedVehicle); // also unsure why this is a bug
         }
 
 
@@ -217,11 +250,11 @@ public class ATP {
 
             int sizeBefore = associatedVehicle.getBookedTimes().size();
             // remove the interval from the list
-            ArrayList<String> currTimes = associatedVehicle.getBookedTimes();
-            currTimes.remove(interval);
+            // ArrayList<String> currTimes = associatedVehicle.getBookedTimes();
+            // currTimes.remove(interval);
 
             // update the interval list
-            associatedVehicle.setAvailableTimes(currTimes); // should you remove from bookedTime?
+            // associatedVehicle.setAvailableTimes(currTimes); // should you remove from bookedTime?
 
             if (sizeBefore != associatedVehicle.getBookedTimes().size()){
                 return "Ride Deletion successful";
@@ -274,9 +307,9 @@ public class ATP {
             System.out.println("No JSON files found in the directory.");
         }
         
-        System.out.println("Transport vehicles in test_vehicles directory: ");
-        for (VehicleData temp : vehicleList)
-            System.out.println(temp.toString());
+        // System.out.println("Transport vehicles in test_vehicles directory: ");
+        // for (VehicleData temp : vehicleList)
+        //     System.out.println(temp.toString());
         
         System.out.println("Size of activeTransportVehicles: " + activeTransportVehicles.size());
         System.out.println(" ");
@@ -323,9 +356,9 @@ public class ATP {
             System.out.println("No JSON files found in the directory.");
         }
         
-        System.out.println("ATP vehicles in test_atp_vehicles directory: ");
-        for (ATPVehicleData temp : atpVehicleList)
-            System.out.println(temp.toString());
+        // System.out.println("ATP vehicles in test_atp_vehicles directory: ");
+        // for (ATPVehicleData temp : atpVehicleList)
+        //     System.out.println(temp.toString());
 
         System.out.println("Size of activeATPVehiclesMap: " + activeATPVehicles.size());
         System.out.println(" ");

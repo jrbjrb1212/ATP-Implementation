@@ -1,27 +1,30 @@
 {
-    "userID": "U456",
-    "firstName": "Bob",
-    "lastName": "Johnson",
-    "numberOfPassengers": 1,
-    "carpool": false,
-    "dateOfRide": "2023-12-02",
-    "hour": "09",
-    "minute": "15",
-    "period": "AM",
-    "purposeOfRide": "Doctor's appointment",
-    "pickupLocation": {
-      "streetAddress": "789 Oak St",
-      "streetAddress2": "",
-      "city": "Smalltown",
-      "state": "NY",
-      "postalCode": "98765"
-    },
-    "dropOffLocation": {
-      "streetAddress": "101 Pine St",
-      "streetAddress2": "",
-      "city": "Villageton",
-      "state": "NY",
-      "postalCode": "56789"
-    }
-  }
-  
+  "userID": "U456",
+  "firstName": "Carol",
+  "lastName": "Williams",
+  "numberOfPassengers": 1,
+  "carpool": true,
+  "dateOfRide": "2023-10-05",
+  "hour": "08",
+  "minute": "15",
+  "lengthOfRideInMinutes": "30",
+  "period": "AM",
+  "purposeOfRide": "Gym",
+  "pickupLocation": {
+    "streetAddress": "987 Maple Blvd",
+    "streetAddress2": "Apt 301",
+    "city": "Cityville",
+    "state": "TX",
+    "postalCode": "13579"
+  },
+  "dropOffLocation": {
+    "streetAddress": "654 Cedar Ln",
+    "streetAddress2": "",
+    "city": "Newcity",
+    "state": "TX",
+    "postalCode": "24680"
+  },
+  "vehicleMakePref": "Ford",
+  "vehicleModelPref": "Fusion",
+  "vehicleYearPref": "2022"
+}

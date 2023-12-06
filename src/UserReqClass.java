@@ -48,6 +48,7 @@ public class UserReqClass {
     }
 
 
+
     public String getUserID() {
         return this.userID;
     }
@@ -116,6 +117,14 @@ public class UserReqClass {
         this.minute = minute;
     }
 
+    public String getLengthOfRideInMinutes() {
+        return this.lengthOfRideInMinutes;
+    }
+
+    public void setLengthOfRideInMinutes(String lengthOfRideInMinutes) {
+        this.lengthOfRideInMinutes = lengthOfRideInMinutes;
+    }
+
     public String getPeriod() {
         return this.period;
     }
@@ -171,14 +180,7 @@ public class UserReqClass {
     public void setVehicleYearPref(String vehicleYearPref) {
         this.vehicleYearPref = vehicleYearPref;
     }
-
-    public void setLengthOfRideInMinutes(String lengthOfRideInMinutes) {
-        this.lengthOfRideInMinutes = lengthOfRideInMinutes;
-    }
     
-    public String getLengthOfRideInMinutes() {
-        return this.lengthOfRideInMinutes;
-    }
 
     // Inner class for Location
     public static class Location {
@@ -259,6 +261,7 @@ public class UserReqClass {
         Gson gson = new Gson();
         UserReqClass temp = gson.fromJson(userDataString, UserReqClass.class);
 
+        this.userID = temp.userID;
         this.firstName = temp.firstName;
         this.lastName = temp.lastName;
         this.numberOfPassengers = temp.numberOfPassengers;
@@ -270,6 +273,10 @@ public class UserReqClass {
         this.purposeOfRide = temp.purposeOfRide;
         this.pickupLocation = temp.pickupLocation;
         this.dropOffLocation = temp.dropOffLocation;
+        this.vehicleMakePref = temp.vehicleMakePref;
+        this.vehicleModelPref = temp.vehicleModelPref;
+        this.vehicleYearPref = temp.vehicleYearPref;
+        this.lengthOfRideInMinutes = temp.lengthOfRideInMinutes;
     }
 }
 

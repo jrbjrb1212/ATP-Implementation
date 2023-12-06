@@ -1,27 +1,30 @@
 {
-    "userID": "U789",
-    "firstName": "Eve",
-    "lastName": "Brown",
-    "numberOfPassengers": 2,
-    "carpool": true,
-    "dateOfRide": "2023-12-03",
-    "hour": "11",
-    "minute": "45",
-    "period": "AM",
-    "purposeOfRide": "Grocery shopping",
-    "pickupLocation": {
-      "streetAddress": "222 Maple St",
-      "streetAddress2": "Apt 5C",
-      "city": "Metroville",
-      "state": "TX",
-      "postalCode": "45678"
-    },
-    "dropOffLocation": {
-      "streetAddress": "333 Oak St",
-      "streetAddress2": "",
-      "city": "Villageton",
-      "state": "TX",
-      "postalCode": "87654"
-    }
-  }
-  
+  "userID": "U789",
+  "firstName": "Eva",
+  "lastName": "Garcia",
+  "numberOfPassengers": 2,
+  "carpool": true,
+  "dateOfRide": "2023-08-10",
+  "hour": "11",
+  "minute": "20",
+  "lengthOfRideInMinutes": "40",
+  "period": "AM",
+  "purposeOfRide": "Shopping",
+  "pickupLocation": {
+    "streetAddress": "369 Oak Ave",
+    "streetAddress2": "",
+    "city": "Villageton",
+    "state": "CA",
+    "postalCode": "98765"
+  },
+  "dropOffLocation": {
+    "streetAddress": "852 Pine St",
+    "streetAddress2": "",
+    "city": "Metropolis",
+    "state": "CA",
+    "postalCode": "12345"
+  },
+  "vehicleMakePref": "Tesla",
+  "vehicleModelPref": "S",
+  "vehicleYearPref": "2021"
+}
