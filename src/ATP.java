@@ -141,19 +141,19 @@ public class ATP {
         return "1000";
     }
 
-    public String changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
+    public BookedRideData changeRide(BookedRideData rideToChange, UserReqClass newUserReq){
         // attempt to reserve a ride
         // if reserve a ride is successful then call delete ride on the old ride
         
-        // String s = reserveRide(rideToChange.getVehicleID(), newUserReq);
+         BookedRideData s = reserveRide(rideToChange.getVehicleID(), newUserReq);
 
 
-        // if(s.equals("Ride Creation Successful")){
-        //     deleteRide(rideToChange);
-        // }
+        if(s.equals("Ride Creation Successful")){
+            deleteRide(rideToChange);
+         }
         
 
-        return "changeRide: Not working yet";
+        return s;
     }
 
 
